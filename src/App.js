@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import { getFromApi } from "./components/Peticion";
+import { Producto } from "./components/Producto";
+import "./App.css";
+import FletchIcon from "./assets/images/Fletch.svg";
+import Logo from "./assets/images/Logo.svg";
 
-function App() {
+const App = () => {
+  const [objetos, setObjetos] = useState([]);
+
+  useEffect(() => {
+    getFromApi(setObjetos);
+    console.log(objetos);
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="logos">
+        <img src={Logo} width="100px" height="50px" />
+        <img src={FletchIcon} height="50px" />
+      </div>
+      <div className="card-container">
+        {objetos.map((item, index) => {
+          return (
+            <Producto
+              imagen={item.images}
+              name={item.name}
+              description={item.description}
+            />
+          );
+        })}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
